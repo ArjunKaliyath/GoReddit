@@ -51,8 +51,8 @@ func (dm *Store) SubscribeToUser(subscriberID, subscribedUserID int) error {
 	defer dm.mu.Unlock()
 
 	_, err := dm.db.Exec(`
-        INSERT OR IGNORE INTO user_subscriptions 
-        (subscriber_id, subscribed_user_id) 
+        INSERT OR IGNORE INTO user_subscriptions
+        (subscriber_id, subscribed_user_id)
         VALUES (?, ?)
     `, subscriberID, subscribedUserID)
 
@@ -64,7 +64,7 @@ func (dm *Store) UnsubscribeFromUser(subscriberID, subscribedUserID int) error {
 	defer dm.mu.Unlock()
 
 	_, err := dm.db.Exec(`
-        DELETE FROM user_subscriptions 
+        DELETE FROM user_subscriptions
         WHERE subscriber_id = ? AND subscribed_user_id = ?
     `, subscriberID, subscribedUserID)
 
@@ -106,7 +106,7 @@ func (dm *Store) GetTopUsers(limit int) ([]model.TopUser, error) {
 	defer dm.mu.RUnlock()
 
 	query := `
-        SELECT 
+        SELECT
             u.id,
             u.username,
             u.karma,
@@ -148,7 +148,7 @@ func (dm *Store) GetTopSubscribedUsers(limit int) ([]model.TopSubscribedUser, er
 	defer dm.mu.RUnlock()
 
 	query := `
-        SELECT 
+        SELECT
             u.id,
             u.username,
             u.karma,

@@ -102,14 +102,14 @@ func Open(dbPath string) (*Store, error) {
 		);
 
 		-- model.User Subscriptions table
-    	CREATE TABLE IF NOT EXISTS user_subscriptions (
-        	subscriber_id INTEGER NOT NULL,
-        	subscribed_user_id INTEGER NOT NULL,
-        	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        	PRIMARY KEY (subscriber_id, subscribed_user_id),
-        	FOREIGN KEY (subscriber_id) REFERENCES users(id),
-        	FOREIGN KEY (subscribed_user_id) REFERENCES users(id)
-    	);
+        CREATE TABLE IF NOT EXISTS user_subscriptions (
+            subscriber_id INTEGER NOT NULL,
+            subscribed_user_id INTEGER NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (subscriber_id, subscribed_user_id),
+            FOREIGN KEY (subscriber_id) REFERENCES users(id),
+            FOREIGN KEY (subscribed_user_id) REFERENCES users(id)
+        );
 	`)
 
 	if err != nil {

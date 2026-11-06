@@ -30,7 +30,7 @@ func (dm *Store) CreateSubreddit(name, description string, creatorID int) (int, 
 
 	// Add creator as first member
 	_, err = tx.Exec(`
-		INSERT INTO subreddit_members (subreddit_id, user_id) 
+		INSERT INTO subreddit_members (subreddit_id, user_id)
 		VALUES (?, ?)
 	`, subredditID, creatorID)
 
@@ -48,7 +48,7 @@ func (dm *Store) JoinSubreddit(userID, subredditID int) error {
 	defer dm.mu.Unlock()
 
 	_, err := dm.db.Exec(`
-		INSERT OR IGNORE INTO subreddit_members (subreddit_id, user_id) 
+		INSERT OR IGNORE INTO subreddit_members (subreddit_id, user_id)
 		VALUES (?, ?)
 	`, subredditID, userID)
 
@@ -60,7 +60,7 @@ func (dm *Store) LeaveSubreddit(userID, subredditID int) error {
 	defer dm.mu.Unlock()
 
 	_, err := dm.db.Exec(`
-		DELETE FROM subreddit_members 
+		DELETE FROM subreddit_members
 		WHERE subreddit_id = ? AND user_id = ?
 	`, subredditID, userID)
 

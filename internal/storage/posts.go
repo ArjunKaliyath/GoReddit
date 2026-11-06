@@ -12,7 +12,7 @@ func (dm *Store) CreatePost(title, content string, authorID, subredditID int) (i
 	defer dm.mu.Unlock()
 
 	result, err := dm.db.Exec(`
-		INSERT INTO posts (title, content, author_id, subreddit_id) 
+		INSERT INTO posts (title, content, author_id, subreddit_id)
 		VALUES (?, ?, ?, ?)
 	`, title, content, authorID, subredditID)
 
@@ -31,7 +31,7 @@ func (dm *Store) GetFeed(userID int) ([]model.Post, error) {
 
 	query := `
 		SELECT p.id, p.title, p.content, p.author_id, p.subreddit_id, p.created_at,
-			   u.username AS author_username, s.name AS subreddit_name,
+               u.username AS author_username, s.name AS subreddit_name,
 			(SELECT COUNT(*) FROM votes WHERE target_id = p.id AND target_type = 'post' AND vote_value = 1) AS upvotes,
             (SELECT COUNT(*) FROM votes WHERE target_id = p.id AND target_type = 'post' AND vote_value = -1) AS downvotes
 		FROM posts p
@@ -115,7 +115,7 @@ func (dm *Store) CreateComment(content string, authorID, postID int, parentComme
 		}
 	}
 	query := `
-		INSERT INTO comments (content, author_id, post_id, parent_comment_id) 
+		INSERT INTO comments (content, author_id, post_id, parent_comment_id)
 		VALUES (?, ?, ?, ?)
 	`
 

@@ -11,7 +11,7 @@ func (dm *Store) SendDirectMessage(fromUserID, toUserID int, content string) (in
 	defer dm.mu.Unlock()
 
 	result, err := dm.db.Exec(`
-		INSERT INTO direct_messages (from_user_id, to_user_id, content) 
+		INSERT INTO direct_messages (from_user_id, to_user_id, content)
 		VALUES (?, ?, ?)
 	`, fromUserID, toUserID, content)
 
@@ -29,11 +29,11 @@ func (dm *Store) GetDirectMessages(userID int) ([]model.DirectMessage, error) {
 	defer dm.mu.RUnlock()
 
 	query := `
-		SELECT 
-			dm.id, 
-			dm.from_user_id, 
-			u.username AS from_username, 
-			dm.content, 
+		SELECT
+			dm.id,
+			dm.from_user_id,
+			u.username AS from_username,
+			dm.content,
 			dm.created_at
 		FROM direct_messages dm
 		JOIN users u ON dm.from_user_id = u.id
